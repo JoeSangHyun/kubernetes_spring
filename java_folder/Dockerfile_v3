@@ -1,0 +1,4 @@
+FROM tiamet133/ubuntu-openjdk21
+WORKDIR /var/project/java
+RUN chmod 777 /var/project/java
+CMD java -jar ./blogSpringApi-0.0.1-SNAPSHOT.jar

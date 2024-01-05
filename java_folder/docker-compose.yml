@@ -1,0 +1,39 @@
+version: "3.1"
+services:
+  db:
+    image: mariadb:latest
+    networks:
+      - backend
+    volumes:
+      - dbvol1:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: Passw0rd
+      MARIADB_DATABASE: blogAPI
+      MARIADB_USER: suapapa
+      MARIADB_PASSWORD: Passw0rd
+  app:
+    depends_on:
+      - db
+    image: tiamet133/blogappapi:1.0.0
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - D:\develope\java_folder:/var/project/java
+    ports:
+      - "8088:8080"
+    restart: always
+    environment:
+      MYSQL_DB_HOST: db
+      MYSQL_DB_PASSWORD: Passw0rd
+      MYSQL_DB_PORT: 3306
+      MYSQL_DB_USER: suapapa
+networks:
+  frontend:
+  backend:    #use a custom driver which takes special options
+
+volumes:
+  dbvol1:
