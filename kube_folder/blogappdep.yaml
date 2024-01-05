@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog000dep
+spec:
+  selector:
+    matchLabels:
+      app: blog000kube
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: blog000kube
+    spec:     
+      containers:
+        - name: blog000ex91
+          image: tiamet133/blogappapi:1.0.1
+          env:
+            - name: MYSQL_DB_USER
+              valueFrom:
+               secretKeyRef:
+                 name: mariadb-secret # Secret의 이름
+                 key: DB_USERNAME # Secret의 data에 들어간 key:value
+            - name: MYSQL_DB_PASSWORD
+              valueFrom:
+               secretKeyRef:
+                 name: mariadb-secret # Secret의 이름
+                 key: DB_PASSWORD # Secret의 data에 들어간 key:value
+            - name: MYSQL_DB_HOST
+              valueFrom:
+               secretKeyRef:
+                 name: mariadb-secret # Secret의 이름
+                 key: DB_HOST # Secret의 data에 들어간 key:value
+            - name: MYSQL_DB_PORT
+              valueFrom:
+               secretKeyRef:
+                 name: mariadb-secret # Secret의 이름
+                 key: DB_PORT # Secret의 data에 들어간 key:value
+          ports:
+            - containerPort: 8080
